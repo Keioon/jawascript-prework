@@ -1,46 +1,59 @@
-var argComputerMove, argMoveId, argPlayerMove, computerMove, playerInput, playerMove, randomNumber, x;
+var argButtonName, buttonPaper, buttonRock, buttonScissors, argComputerMove, argMoveId, argPlayerMove, playerMove, computerMove;
 
-/**
- * Describe this function...
- */
+buttonPaper = document.getElementById('button-Paper');
+buttonRock = document.getElementById('button-Rock');
+buttonScissors = document.getElementById('button-Scissors');
+
+
+function buttonClicked(argButtonName) {
+    clearMessages();
+    console.log(argButtonName + ' został kliknięty');
+    playerMove = argButtonName;
+    randomNumber = Math.floor(Math.random() * 3 + 1);
+    console.log('wylosowana liczba to: ' + randomNumber);
+    computerMove = getMoveName(randomNumber);
+    console.log('ruch komputera to: ' + computerMove);
+
+    displayResult(playerMove, computerMove);  
+}
+
 function getMoveName(argMoveId) {
-  console.log('wywołano funkcję getMoveName z argumentem: ' + argMoveId);
-  if (argMoveId == 1) {
-    return 'kamień';
-  } else if (argMoveId == 2) {
-    return 'papier';
-  } else if (argMoveId == 3) {
-    return 'nożyce';
-  } else {
-    printMessage('Nie znam ruchu o id ' + argMoveId + '. Zakładam, że chodziło o "kamień".');
-    return 'kamień';
-  }
+    console.log('wywołano funkcję getMoveName z argumentem: ' + argMoveId);
+    if (argMoveId == 1) {
+        return 'kamień';
+    }else if (argMoveId == 2) {
+        return 'papier';
+    }else if (argMoveId == 3) {
+        return 'nożyce';
+    }else {
+        printMessage('Nie znam ruchu o id ' + argMoveId + '. Zakładam, że chodziło o "kamień".');
+        return 'kamień';
+    }
 }
 
-/**
- * Describe this function...
- */
 function displayResult(argPlayerMove, argComputerMove) {
-  console.log('wywołano funkcję displayResults z argumentami: ' + argPlayerMove + ', ' + argComputerMove);
-  if (argPlayerMove == 'papier' && argComputerMove == 'kamień') {
-    printMessage('Wygrywasz!');
-  } else if (argPlayerMove == 'nożyce' && argComputerMove == 'papier') {
-    printMessage('Wygrywasz!');
-  } else if (argPlayerMove == 'kamień' && argComputerMove == 'nożyce') {
-    printMessage('Wygrywasz!');
-  } else if (argComputerMove == argPlayerMove) {
-    printMessage('Remis!');
-  } else {
-    printMessage('Przegrywasz :(');
-  }
-  printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
+    console.log('wywołano funkcję displayResults z argumentami: ' + argPlayerMove + ', ' + argComputerMove);
+    if (argPlayerMove == 'papier' && argComputerMove == 'kamień') {
+        printMessage('Wygrywasz!');
+        counter1 = counter1 + 1;
+    }else if (argPlayerMove == 'nożyce' && argComputerMove == 'papier') {
+        printMessage('Wygrywasz!');
+        counter1 = counter1 + 1;
+    }else if (argPlayerMove == 'kamień' && argComputerMove == 'nożyce') {
+        printMessage('Wygrywasz!');
+        counter1 = counter1 + 1;
+    }else if (argPlayerMove == argComputerMove) {
+        printMessage('Wygląda na to, że mamy REMIS!');
+    }else {
+        printMessage('Przegrywasz :(');
+        counter2 = counter2 + 1;
+    }
+    printMessage('Zagrałem ' + argComputerMove + ', a Ty ' + argPlayerMove);
 }
-playerInput = prompt('Wybierz swój ruch! 1: kamień, 2: papier, 3: nożyce.');
-console.log('wybór ruchu gracza to: ' + playerInput);
-playerMove = getMoveName(playerInput);
-console.log('ruch gracza to: ' + playerMove);
-randomNumber = Math.floor(Math.random() * 3 + 1);
-console.log('wylosowana liczba to: ' + randomNumber);
-computerMove = getMoveName(randomNumber);
-console.log('ruch komputera to: ' + computerMove);
-displayResult(playerMove, computerMove);
+
+buttonPaper.addEventListener('click', function(){ 
+    buttonClicked('papier'); });
+buttonRock.addEventListener('click', function(){
+    buttonClicked('kamień'); });
+buttonScissors.addEventListener('click', function(){ 
+    buttonClicked('nożyce'); });
